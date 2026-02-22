@@ -7,7 +7,7 @@ const r_type = struct {
     funct7: u7,
 };
 
-fn decode_r(raw: u32) r_type {
+pub fn decode_r(raw: u32) r_type {
     return r_type{
         .opcode = @truncate(raw),
         .rd = @truncate(raw >> 7),
@@ -26,7 +26,7 @@ const i_type = struct {
     imm: u12,
 };
 
-fn decode_i(raw: u32) i_type {
+pub fn decode_i(raw: u32) i_type {
     return i_type{
         .opcode = @truncate(raw),
         .rd = @truncate(raw >> 7),
@@ -44,7 +44,7 @@ const s_type = struct {
     imm: u12,
 };
 
-fn decode_s(raw: u32) s_type {
+pub fn decode_s(raw: u32) s_type {
     const imm_a: u5 = @truncate(raw >> 7);
     const imm_b: u7 = @truncate(raw >> 25);
 
@@ -65,7 +65,7 @@ const b_type = struct {
     imm: u13,
 };
 
-fn decode_b(raw: u32) b_type {
+pub fn decode_b(raw: u32) b_type {
     const imm_a: u1 = 0;
     const imm_b: u4 = @truncate(raw >> 8);
     const imm_c: u6 = @truncate(raw >> 25);
@@ -87,7 +87,7 @@ const u_type = struct {
     imm: u20,
 };
 
-fn decode_u(raw: u32) u_type {
+pub fn decode_u(raw: u32) u_type {
     return u_type{
         .opcode = @truncate(raw),
         .rd = @truncate(raw >> 7),
@@ -101,7 +101,7 @@ const j_type = struct {
     imm: u21,
 };
 
-fn decode_j(raw: u32) j_type {
+pub fn decode_j(raw: u32) j_type {
     const imm_a: u1 = 0;
     const imm_b: u10 = @truncate(raw >> 21);
     const imm_c: u1 = @truncate(raw >> 20);
@@ -141,7 +141,7 @@ const Instruction = union(InstructionType) {
     j: j_type,
 };
 
-fn decode(raw: u32) Instruction {
+pub fn decode(raw: u32) Instruction {
     const opcode = @as(u7, raw & 0b1111111);
     switch (opcode) {
         0b0110011 => return Instruction{ .r = decode_r(raw) },
