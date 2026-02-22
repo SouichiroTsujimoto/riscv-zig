@@ -117,7 +117,11 @@ fn decode_j(raw: u32) j_type {
 
 const InstructionType = enum {
     r,
-    i,
+    i_alu,
+    i_load,
+    i_jalr,
+    i_system,
+    i_fence,
     s,
     b,
     u,
@@ -126,7 +130,11 @@ const InstructionType = enum {
 
 const Instruction = union(InstructionType) {
     r: r_type,
-    i: i_type,
+    i_alu: i_type,
+    i_load: i_type,
+    i_jalr: i_type,
+    i_system: i_type,
+    i_fence: i_type,
     s: s_type,
     b: b_type,
     u: u_type,
@@ -137,11 +145,11 @@ fn decode(raw: u32) Instruction {
     const opcode = @as(u7, raw & 0b1111111);
     switch (opcode) {
         0b0110011 => return Instruction{ .r = decode_r(raw) },
-        0b0010011 => return Instruction{ .i = decode_i(raw) },
-        0b0000011 => return Instruction{ .i = decode_i(raw) },
-        0b1100111 => return Instruction{ .i = decode_i(raw) },
-        0b1110011 => return Instruction{ .i = decode_i(raw) },
-        0b0001111 => return Instruction{ .i = decode_i(raw) },
+        0b0010011 => return Instruction{ .i_alu = decode_i(raw) },
+        0b0000011 => return Instruction{ .i_load = decode_i(raw) },
+        0b1100111 => return Instruction{ .i_jalr = decode_i(raw) },
+        0b1110011 => return Instruction{ .i_system = decode_i(raw) },
+        0b0001111 => return Instruction{ .i_fence = decode_i(raw) },
         0b0100011 => return Instruction{ .s = decode_s(raw) },
         0b1100011 => return Instruction{ .b = decode_b(raw) },
         0b0110111 => return Instruction{ .u = decode_u(raw) },
