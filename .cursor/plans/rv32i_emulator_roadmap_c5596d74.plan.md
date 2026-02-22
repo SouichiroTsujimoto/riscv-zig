@@ -4,7 +4,7 @@ overview: Zigの学習とRISC-Vアーキテクチャの理解を両立しなが�
 todos:
   - id: phase0
     content: "Phase 0: CPU構造体（レジスタx0-x31, PC）とメモリ構造体（read/write 8/16/32）の定義"
-    status: in_progress
+    status: pending
   - id: phase1
     content: "Phase 1: 命令デコーダの実装（6フォーマット: R/I/S/B/U/J の各フィールド抽出と即値符号拡張）"
     status: pending
@@ -58,6 +58,7 @@ isProject: false
   - フラットなバイト配列ベースのメモリ（例: 64KB〜1MB）
   - `read8/16/32()`, `write8/16/32()` -- リトルエンディアン
   - ミスアラインアクセスのエラー処理
+    - エラー処理めんどくさいので、後回し
 
 ### Zig 学習ポイント
 
