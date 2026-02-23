@@ -1,5 +1,7 @@
+const register = u32;
+
 const cpu = struct {
-    x: [32]u32,
+    x: [32]register,
     pc: u32,
 
     pub fn init() cpu {
@@ -12,5 +14,9 @@ const cpu = struct {
     pub fn reset(self: *cpu) void {
         self.x = .{0} ** 32;
         self.pc = 0;
+    }
+
+    pub fn reg(self: *cpu, index: u5) *register {
+        return &self.x[@as(usize, index)];
     }
 };
