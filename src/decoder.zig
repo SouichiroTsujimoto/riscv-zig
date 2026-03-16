@@ -18,7 +18,7 @@ pub fn decode_r(raw: u32) r_type {
     };
 }
 
-const i_type = struct {
+pub const i_type = struct {
     opcode: u7,
     rd: u5,
     funct3: u3,
@@ -36,7 +36,7 @@ pub fn decode_i(raw: u32) i_type {
     };
 }
 
-const s_type = struct {
+pub const s_type = struct {
     opcode: u7,
     funct3: u3,
     rs1: u5,
@@ -57,7 +57,7 @@ pub fn decode_s(raw: u32) s_type {
     };
 }
 
-const b_type = struct {
+pub const b_type = struct {
     opcode: u7,
     funct3: u3,
     rs1: u5,
@@ -81,7 +81,7 @@ pub fn decode_b(raw: u32) b_type {
     };
 }
 
-const u_type = struct {
+pub const u_type = struct {
     opcode: u7,
     rd: u5,
     imm: u20,
@@ -95,7 +95,7 @@ pub fn decode_u(raw: u32) u_type {
     };
 }
 
-const j_type = struct {
+pub const j_type = struct {
     opcode: u7,
     rd: u5,
     imm: u21,
@@ -115,7 +115,7 @@ pub fn decode_j(raw: u32) j_type {
     };
 }
 
-const InstructionType = enum {
+pub const InstructionType = enum {
     r,
     i,
     s,
@@ -124,11 +124,11 @@ const InstructionType = enum {
     j,
 };
 
-const Instruction = union(InstructionType) {
-    r: r_type,
-    i: i_type,
-    s: s_type,
-    b: b_type,
-    u: u_type,
-    j: j_type,
-};
+// const Instruction = union(InstructionType) {
+//     r: r_type,
+//     i: i_type,
+//     s: s_type,
+//     b: b_type,
+//     u: u_type,
+//     j: j_type,
+// };

@@ -1,5 +1,9 @@
-const memory = struct {
-    memory: [1024 * 1024]u8,
+pub const memory = struct {
+    memory: [1024]u8,
+
+    pub fn init() memory {
+        return memory{ .memory = undefined };
+    }
 
     pub fn read8(self: *const memory, addr: u32) u8 {
         return self.memory[@as(usize, addr)];
@@ -18,14 +22,14 @@ const memory = struct {
     }
 
     pub fn write16(self: *memory, addr: u32, value: u16) void {
-        self.write8(addr, @as(u8, value & 0xFF));
-        self.write8(addr + 1, @as(u8, value >> 8 & 0xFF));
+        self.write8(addr, @truncate(value));
+        self.write8(addr + 1, @truncate(value >> 8));
     }
 
     pub fn write32(self: *memory, addr: u32, value: u32) void {
-        self.write8(addr, @as(u8, value & 0xFF));
-        self.write8(addr + 1, @as(u8, value >> 8 & 0xFF));
-        self.write8(addr + 2, @as(u8, value >> 16 & 0xFF));
-        self.write8(addr + 3, @as(u8, value >> 24 & 0xFF));
+        self.write8(addr, @truncate(value));
+        self.write8(addr + 1, @truncate(value >> 8));
+        self.write8(addr + 2, @truncate(value >> 16));
+        self.write8(addr + 3, @truncate(value >> 24));
     }
 };

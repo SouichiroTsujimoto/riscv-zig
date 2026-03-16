@@ -1,7 +1,7 @@
-const register = u32;
+const std = @import("std");
 
-const cpu = struct {
-    x: [32]register,
+pub const cpu = struct {
+    x: [32]u32,
     pc: u32,
 
     pub fn init() cpu {
@@ -16,7 +16,14 @@ const cpu = struct {
         self.pc = 0;
     }
 
-    pub fn reg(self: *cpu, index: u5) *register {
+    pub fn reg(self: *cpu, index: u5) *u32 {
         return &self.x[@as(usize, index)];
+    }
+
+    pub fn show(self: *cpu) void {
+        for (self.x, 0..) |r, i| {
+            std.debug.print("{d}: 0x{x}\n", .{ i, r });
+        }
+        std.debug.print("pc: 0x{x}\n", .{self.pc});
     }
 };
