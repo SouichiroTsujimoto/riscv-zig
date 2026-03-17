@@ -1,3 +1,5 @@
+var ram: [2 * 1024 * 1024]u8 = undefined; // 2MB
+
 pub const memory = struct {
     memory: [1024]u8,
 
