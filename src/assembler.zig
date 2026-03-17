@@ -19,7 +19,7 @@ fn type_i(opcode: u7, funct3: u3, rd: u5, rs1: u5, imm: u12) u32 {
 
 fn type_s(imm: u12, funct3: u3, rs1: u5, rs2: u5) u32 {
     const imm_0_4: u5 = @truncate(imm);
-    const imm_5_11: u7 = @truncate(imm);
+    const imm_5_11: u7 = @truncate(imm >> 5);
 
     return @as(u32, imm_5_11) << 25 |
         @as(u32, rs2) << 20 |

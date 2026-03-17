@@ -8,17 +8,24 @@ pub fn main() !void {
     var c = cpu.cpu.init();
     var m = memory.memory.init();
 
-    // 0b000000000011_00000_000_00001_0010011, // addi x1, x0, 3
-    // 0b000000000100_00000_000_00010_0010011, // addi x2, x0, 4
-    // 0b0000000_00010_00001_000_01010_0110011, // add x10, x1, x2
-
+    // JAL を使ったサブルーチン呼び出しの例
+    // サブルーチン: x10 = x1 + x2
+    //
+    // pc= 0: addi 1 0 5       x1 = 5
+    // pc= 4: addi 2 0 3       x2 = 3
+    // pc= 8: jal 3 12         x3 = 12 (戻りアドレス), pc = 20 へジャンプ
+    // pc=12: addi 11 10 0     [戻り後] x11 = x10
+    // pc=16: jal 0 12         pc = 28 (プログラム終了)
+    // pc=20: add 10 1 2       [sub] x10 = x1 + x2 = 8
+    // pc=24: jalr 0 3 0       pc = x3 = 12 (return)
     const lines = [_][]const u8{
-        "addi 5 0 3",
-        "addi 6 0 100",
-        "add 10 5 6",
-        "sub 5 5 5",
-        "addi 5 0 20",
-        "add 10 10 5",
+        "addi 1 0 5",
+        "addi 2 0 3",
+        "jal 3 12",
+        "addi 11 10 0",
+        "jal 0 12",
+        "add 10 1 2",
+        "jalr 0 3 0",
     };
 
     var instructions = std.mem.zeroes([lines.len * 4:0]u8);

@@ -20,6 +20,16 @@ pub const cpu = struct {
         return &self.x[@as(usize, index)];
     }
 
+    pub fn write(self: *cpu, index: u5, value: u32) void {
+        if (index != 0) {
+            self.x[@as(usize, index)] = value;
+        }
+    }
+
+    pub fn read(self: *cpu, index: u5) u32 {
+        return self.x[@as(usize, index)];
+    }
+
     pub fn show(self: *cpu) void {
         for (self.x, 0..) |r, i| {
             std.debug.print("{d}: 0x{x}\n", .{ i, r });
