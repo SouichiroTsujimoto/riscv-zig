@@ -79,6 +79,8 @@ pub fn execute_r(c: *cpu.cpu, raw: u32) void {
             c.reg(instruction.rd).* = c.reg(instruction.rs1).* & c.reg(instruction.rs2).*;
         },
     }
+
+    c.pc += 4;
 }
 
 pub fn execute_i_alu(c: *cpu.cpu, raw: u32) void {
@@ -134,6 +136,8 @@ pub fn execute_i_alu(c: *cpu.cpu, raw: u32) void {
             c.reg(instruction.rd).* = c.reg(instruction.rs1).* & sign_extend_12(instruction.imm);
         },
     }
+
+    c.pc += 4;
 }
 
 pub fn execute_i_load(c: *cpu.cpu, m: *memory.memory, raw: u32) void {
@@ -165,6 +169,8 @@ pub fn execute_i_load(c: *cpu.cpu, m: *memory.memory, raw: u32) void {
         },
         else => {},
     }
+
+    c.pc += 4;
 }
 
 pub fn execute_i_jalr(c: *cpu.cpu, raw: u32) void {
@@ -182,7 +188,9 @@ pub fn execute_i_jalr(c: *cpu.cpu, raw: u32) void {
 }
 
 // 今はダミー
-fn execute_i_system(_: *cpu.cpu, _: u32) void {}
+fn execute_i_system(c: *cpu.cpu, _: u32) void {
+    c.pc += 4;
+}
 
 pub fn execute_s(c: *cpu.cpu, m: *memory.memory, raw: u32) void {
     const instruction = decoder.decode_s(raw);
@@ -203,6 +211,8 @@ pub fn execute_s(c: *cpu.cpu, m: *memory.memory, raw: u32) void {
         },
         else => {},
     }
+
+    c.pc += 4;
 }
 
 pub fn execute_b(c: *cpu.cpu, raw: u32) void {
@@ -257,11 +267,15 @@ pub fn execute_b(c: *cpu.cpu, raw: u32) void {
 pub fn execute_u_lui(c: *cpu.cpu, raw: u32) void {
     const instruction = decoder.decode_u(raw);
     c.reg(instruction.rd).* = @as(u32, instruction.imm) << 12;
+
+    c.pc += 4;
 }
 
 pub fn execute_u_auipc(c: *cpu.cpu, raw: u32) void {
     const instruction = decoder.decode_u(raw);
     c.reg(instruction.rd).* = c.pc +% (@as(u32, instruction.imm) << 12);
+
+    c.pc += 4;
 }
 
 pub fn execute_j(c: *cpu.cpu, raw: u32) void {
