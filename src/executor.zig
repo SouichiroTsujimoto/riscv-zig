@@ -184,9 +184,6 @@ pub fn execute_i_jalr(c: *cpu.cpu, raw: u32) void {
 // 今はダミー
 fn execute_i_system(_: *cpu.cpu, _: u32) void {}
 
-// 今はダミー
-fn execute_i_fence(_: *cpu.cpu, _: u32) void {}
-
 pub fn execute_s(c: *cpu.cpu, m: *memory.memory, raw: u32) void {
     const instruction = decoder.decode_s(raw);
     const addr = c.reg(instruction.rs1).* +% sign_extend_12(instruction.imm);
@@ -276,17 +273,16 @@ pub fn execute_j(c: *cpu.cpu, raw: u32) void {
 pub fn execute(c: *cpu.cpu, m: *memory.memory, raw: u32) void {
     const opcode: u7 = @truncate(raw);
     switch (opcode) {
-        0b1100110 => execute_r(c, raw),
-        0b1100100 => execute_i_alu(c, raw),
-        0b1100000 => execute_i_load(c, m, raw),
-        0b1110011 => execute_i_jalr(c, raw),
-        0b1100111 => execute_i_system(c, raw),
-        0b1111000 => execute_i_fence(c, raw),
-        0b1100010 => execute_s(c, m, raw),
+        0b0110011 => execute_r(c, raw),
+        0b0010011 => execute_i_alu(c, raw),
+        0b0000011 => execute_i_load(c, m, raw),
+        0b1100111 => execute_i_jalr(c, raw),
+        0b1110011 => execute_i_system(c, raw),
+        0b0100011 => execute_s(c, m, raw),
         0b1100011 => execute_b(c, raw),
-        0b1110110 => execute_u_lui(c, raw),
-        0b1110100 => execute_u_auipc(c, raw),
-        0b1110111 => execute_j(c, raw),
+        0b0110111 => execute_u_lui(c, raw),
+        0b0010111 => execute_u_auipc(c, raw),
+        0b1101111 => execute_j(c, raw),
         else => @panic("unknown opcode"),
     }
 }
