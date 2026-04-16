@@ -117,25 +117,25 @@ pub fn assemble(line: []const u8) u32 {
     else if (std.mem.eql(u8, inst, "addi")) {
         const rd: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u12 = std.fmt.parseInt(u12, tokens.next().?, 10) catch unreachable;
+        const imm: u12 = @bitCast(std.fmt.parseInt(i12, tokens.next().?, 10) catch unreachable);
 
         return type_i(0b0010011, 0b000, rd, rs1, imm);
     } else if (std.mem.eql(u8, inst, "xori")) {
         const rd: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u12 = std.fmt.parseInt(u12, tokens.next().?, 10) catch unreachable;
+        const imm: u12 = @bitCast(std.fmt.parseInt(i12, tokens.next().?, 10) catch unreachable);
 
         return type_i(0b0010011, 0b100, rd, rs1, imm);
     } else if (std.mem.eql(u8, inst, "ori")) {
         const rd: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u12 = std.fmt.parseInt(u12, tokens.next().?, 10) catch unreachable;
+        const imm: u12 = @bitCast(std.fmt.parseInt(i12, tokens.next().?, 10) catch unreachable);
 
         return type_i(0b0010011, 0b110, rd, rs1, imm);
     } else if (std.mem.eql(u8, inst, "andi")) {
         const rd: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u12 = std.fmt.parseInt(u12, tokens.next().?, 10) catch unreachable;
+        const imm: u12 = @bitCast(std.fmt.parseInt(i12, tokens.next().?, 10) catch unreachable);
 
         return type_i(0b0010011, 0b111, rd, rs1, imm);
     } else if (std.mem.eql(u8, inst, "slli")) {
@@ -160,49 +160,49 @@ pub fn assemble(line: []const u8) u32 {
     } else if (std.mem.eql(u8, inst, "slti")) {
         const rd: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u12 = std.fmt.parseInt(u12, tokens.next().?, 10) catch unreachable;
+        const imm: u12 = @bitCast(std.fmt.parseInt(i12, tokens.next().?, 10) catch unreachable);
 
         return type_i(0b0010011, 0b010, rd, rs1, imm);
     } else if (std.mem.eql(u8, inst, "sltiu")) {
         const rd: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u12 = std.fmt.parseInt(u12, tokens.next().?, 10) catch unreachable;
+        const imm: u12 = @bitCast(std.fmt.parseInt(i12, tokens.next().?, 10) catch unreachable);
 
         return type_i(0b0010011, 0b011, rd, rs1, imm);
     } else if (std.mem.eql(u8, inst, "lb")) {
         const rd: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u12 = std.fmt.parseInt(u12, tokens.next().?, 10) catch unreachable;
+        const imm: u12 = @bitCast(std.fmt.parseInt(i12, tokens.next().?, 10) catch unreachable);
 
         return type_i(0b0000011, 0b000, rd, rs1, imm);
     } else if (std.mem.eql(u8, inst, "lh")) {
         const rd: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u12 = std.fmt.parseInt(u12, tokens.next().?, 10) catch unreachable;
+        const imm: u12 = @bitCast(std.fmt.parseInt(i12, tokens.next().?, 10) catch unreachable);
 
         return type_i(0b0000011, 0b001, rd, rs1, imm);
     } else if (std.mem.eql(u8, inst, "lw")) {
         const rd: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u12 = std.fmt.parseInt(u12, tokens.next().?, 10) catch unreachable;
+        const imm: u12 = @bitCast(std.fmt.parseInt(i12, tokens.next().?, 10) catch unreachable);
 
         return type_i(0b0000011, 0b010, rd, rs1, imm);
     } else if (std.mem.eql(u8, inst, "lbu")) {
         const rd: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u12 = std.fmt.parseInt(u12, tokens.next().?, 10) catch unreachable;
+        const imm: u12 = @bitCast(std.fmt.parseInt(i12, tokens.next().?, 10) catch unreachable);
 
         return type_i(0b0000011, 0b100, rd, rs1, imm);
     } else if (std.mem.eql(u8, inst, "lhu")) {
         const rd: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u12 = std.fmt.parseInt(u12, tokens.next().?, 10) catch unreachable;
+        const imm: u12 = @bitCast(std.fmt.parseInt(i12, tokens.next().?, 10) catch unreachable);
 
         return type_i(0b0000011, 0b101, rd, rs1, imm);
     } else if (std.mem.eql(u8, inst, "jalr")) {
         const rd: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u12 = std.fmt.parseInt(u12, tokens.next().?, 10) catch unreachable;
+        const imm: u12 = @bitCast(std.fmt.parseInt(i12, tokens.next().?, 10) catch unreachable);
 
         return type_i(0b1100111, 0b000, rd, rs1, imm);
     } else if (std.mem.eql(u8, inst, "ecall")) {
@@ -234,37 +234,37 @@ pub fn assemble(line: []const u8) u32 {
     else if (std.mem.eql(u8, inst, "beq")) {
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs2: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u13 = std.fmt.parseInt(u13, tokens.next().?, 10) catch unreachable;
+        const imm: u13 = @bitCast(std.fmt.parseInt(i13, tokens.next().?, 10) catch unreachable);
 
         return type_b(imm, 0b000, rs1, rs2);
     } else if (std.mem.eql(u8, inst, "bne")) {
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs2: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u13 = std.fmt.parseInt(u13, tokens.next().?, 10) catch unreachable;
+        const imm: u13 = @bitCast(std.fmt.parseInt(i13, tokens.next().?, 10) catch unreachable);
 
         return type_b(imm, 0b001, rs1, rs2);
     } else if (std.mem.eql(u8, inst, "blt")) {
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs2: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u13 = std.fmt.parseInt(u13, tokens.next().?, 10) catch unreachable;
+        const imm: u13 = @bitCast(std.fmt.parseInt(i13, tokens.next().?, 10) catch unreachable);
 
         return type_b(imm, 0b100, rs1, rs2);
     } else if (std.mem.eql(u8, inst, "bge")) {
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs2: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u13 = std.fmt.parseInt(u13, tokens.next().?, 10) catch unreachable;
+        const imm: u13 = @bitCast(std.fmt.parseInt(i13, tokens.next().?, 10) catch unreachable);
 
         return type_b(imm, 0b101, rs1, rs2);
     } else if (std.mem.eql(u8, inst, "bltu")) {
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs2: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u13 = std.fmt.parseInt(u13, tokens.next().?, 10) catch unreachable;
+        const imm: u13 = @bitCast(std.fmt.parseInt(i13, tokens.next().?, 10) catch unreachable);
 
         return type_b(imm, 0b110, rs1, rs2);
     } else if (std.mem.eql(u8, inst, "bgeu")) {
         const rs1: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
         const rs2: u5 = std.fmt.parseInt(u5, tokens.next().?, 10) catch unreachable;
-        const imm: u13 = std.fmt.parseInt(u13, tokens.next().?, 10) catch unreachable;
+        const imm: u13 = @bitCast(std.fmt.parseInt(i13, tokens.next().?, 10) catch unreachable);
 
         return type_b(imm, 0b111, rs1, rs2);
     }
